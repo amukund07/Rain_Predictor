@@ -159,7 +159,7 @@
 <body>
     <div class="container">
 
-        
+
         {% if prediction %}
         <div class="result-banner {{ 'rain-yes' if prediction == 'Yes' else 'rain-no' }}">
             <h2>
@@ -264,7 +264,7 @@
                         <option>SW</option>
                         <option>W</option>
                         <option>NW</option>
-                        </select>
+                    </select>
                 </div>
 
                 <!-- Rain Today -->
@@ -279,9 +279,19 @@
             </div>
 
             <button class="btn">🌧️ Predict Rain</button>
-        </form>    
-            <a href="/" class="back">← Back to Home</a>
+        </form>
+        <a href="/" class="back">← Back to Home</a>
     </div>
+    <footer>
+        Built with Flask & Machine Learning • Amritanshu Mukund
+    </footer>
+
 </body>
+<footer>
+    © 2026 • Rain Prediction System
+    <br>
+    Built with Flask, Scikit-learn & Real Weather Data
+</footer>
+
 
 </html>
