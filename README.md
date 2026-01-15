@@ -27,7 +27,7 @@ Dataset: Australian Weather Dataset
 
 Target Variable: RainTomorrow
 
-Model: RandomForestClassifier
+Model: Logistics Classifier
 
 Preprocessing:
 
