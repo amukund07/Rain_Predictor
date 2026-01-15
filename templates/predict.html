@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Rain Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #0f172a, #020617);
+            color: #e5e7eb;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 30px 20px 60px;
+        }
+
+        /* 🔝 RESULT BANNER */
+        .result-banner {
+            margin-bottom: 25px;
+            padding: 25px;
+            border-radius: 18px;
+            text-align: center;
+            animation: slideDown 0.6s ease;
+        }
+
+        .rain-yes {
+            background: linear-gradient(120deg, rgba(56, 189, 248, 0.35), rgba(14, 165, 233, 0.2));
+            border: 1px solid rgba(56, 189, 248, 0.6);
+        }
+
+        .rain-no {
+            background: linear-gradient(120deg, rgba(250, 204, 21, 0.35), rgba(234, 179, 8, 0.2));
+            border: 1px solid rgba(250, 204, 21, 0.6);
+        }
+
+        .result-banner h2 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .result-banner p {
+            margin-top: 8px;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .confidence {
+            margin-top: 15px;
+            width: 80%;
+            height: 22px;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            line-height: 22px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: black;
+            background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+            transition: width 1s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.4rem;
+            margin: 25px 0 10px;
+            background: linear-gradient(90deg, #60a5fa, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #cbd5e1;
+            margin-bottom: 35px;
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(14px);
+            padding: 40px;
+            border-radius: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        label {
+            font-size: 0.85rem;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border-radius: 10px;
+            background: #020617;
+            color: #e5e7eb;
+            border: none;
+        }
+
+        .btn {
+            margin-top: 40px;
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            color: white;
+            background: linear-gradient(90deg, #2563eb, #0ea5e9);
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.45);
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .back {
+            display: block;
+            margin-top: 25px;
+            text-align: center;
+            color: #93c5fd;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        
+        {% if prediction %}
+        <div class="result-banner {{ 'rain-yes' if prediction == 'Yes' else 'rain-no' }}">
+            <h2>
+                {% if prediction == 'Yes' %}
+                🌧️ Rain Expected Tomorrow
+                {% else %}
+                ☀️ No Rain Tomorrow
+                {% endif %}
+            </h2>
+            <p>Prediction confidence: {{ probability }}%</p>
+
+            <div class="confidence">
+                <div class="confidence-fill" style="width: {{ probability }}%">
+                    {{ probability }}%
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <h1>Rain Prediction</h1>
+        <p class="subtitle">Enter today’s weather conditions</p>
+
+        <form method="POST" action="/predict">
+            <div class="grid">
+                <!-- Location -->
+                <div>
+                    <label>Location</label>
+                    <select name="Location" required>
+                        <option value="">--Select--</option>
+                        <option value="Albury">Albury</option>
+                        <option value="BadgerysCreek">BadgerysCreek</option>
+                        <option value="Cobar">Cobar</option>
+                        <option value="CoffsHarbour">CoffsHarbour</option>
+                        <option value="Moree">Moree</option>
+                        <option value="Newcastle">Newcastle</option>
+                        <option value="NorahHead">NorahHead</option>
+                        <option value="NorfolkIsland">NorfolkIsland</option>
+                        <option value="Penrith">Penrith</option>
+                        <option value="Richmond">Richmond</option>
+                        <option value="Sydney">Sydney</option>
+                        <option value="SydneyAirport">SydneyAirport</option>
+                        <option value="WaggaWagga">WaggaWagga</option>
+                        <option value="Williamtown">Williamtown</option>
+                        <option value="Wollongong">Wollongong</option>
+                        <option value="Canberra">Canberra</option>
+                        <option value="Tuggeranong">Tuggeranong</option>
+                        <option value="MountGinini">MountGinini</option>
+                        <option value="Ballarat">Ballarat</option>
+                        <option value="Bendigo">Bendigo</option>
+                        <option value="Sale">Sale</option>
+                        <option value="MelbourneAirport">MelbourneAirport</option>
+                        <option value="Melbourne">Melbourne</option>
+                        <option value="Mildura">Mildura</option>
+                        <option value="Nhil">Nhil</option>
+                        <option value="Portland">Portland</option>
+                        <option value="Watsonia">Watsonia</option>
+                        <option value="Dartmoor">Dartmoor</option>
+                        <option value="Brisbane">Brisbane</option>
+                        <option value="Cairns">Cairns</option>
+                        <option value="GoldCoast">GoldCoast</option>
+                        <option value="Townsville">Townsville</option>
+                        <option value="Adelaide">Adelaide</option>
+                        <option value="MountGambier">MountGambier</option>
+                        <option value="Nuriootpa">Nuriootpa</option>
+                        <option value="Woomera">Woomera</option>
+                        <option value="Albany">Albany</option>
+                        <option value="Witchcliffe">Witchcliffe</option>
+                        <option value="PearceRAAF">PearceRAAF</option>
+                        <option value="PerthAirport">PerthAirport</option>
+                        <option value="Perth">Perth</option>
+                        <option value="SalmonGums">SalmonGums</option>
+                        <option value="Walpole">Walpole</option>
+                        <option value="Hobart">Hobart</option>
+                        <option value="Launceston">Launceston</option>
+                        <option value="AliceSprings">AliceSprings</option>
+                        <option value="Darwin">Darwin</option>
+                        <option value="Katherine">Katherine</option>
+                        <option value="Uluru">Uluru</option>
+                    </select>
+                </div>
+
+                <!-- Numeric inputs (can be empty) -->
+                <div><label>Min Temperature (°C)</label><input type="number" step="0.1" name="MinTemp"></div>
+                <div><label>Max Temperature (°C)</label><input type="number" step="0.1" name="MaxTemp"></div>
+                <div><label>Rainfall Today (mm)</label><input type="number" step="0.1" name="Rainfall"></div>
+                <div><label>Wind Gust Speed (km/h)</label><input type="number" step="0.1" name="WindGustSpeed"></div>
+                <div><label>Humidity at 9 AM (%)</label><input type="number" step="1" name="Humidity9am"></div>
+                <div><label>Humidity at 3 PM (%)</label><input type="number" step="1" name="Humidity3pm"></div>
+                <div><label>Pressure at 9 AM (hPa)</label><input type="number" step="0.1" name="Pressure9am"></div>
+                <div><label>Pressure at 3 PM (hPa)</label><input type="number" step="0.1" name="Pressure3pm"></div>
+
+                <!-- Wind directions -->
+                <div>
+                    <label>Wind Gust Direction</label>
+                    <select name="WindGustDir">
+                        <option value="">None</option>
+                        <option>N</option>
+                        <option>NE</option>
+                        <option>E</option>
+                        <option>SE</option>
+                        <option>S</option>
+                        <option>SW</option>
+                        <option>W</option>
+                        <option>NW</option>
+                        </select>
+                </div>
+
+                <!-- Rain Today -->
+                <div>
+                    <label>Did it rain today?</label>
+                    <select name="RainToday">
+                        <option value="">None</option>
+                        <option>No</option>
+                        <option>Yes</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn">🌧️ Predict Rain</button>
+        </form>    
+            <a href="/" class="back">← Back to Home</a>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rain Prediction System</title>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #0f172a, #020617);
+            color: #e5e7eb;
+        }
+
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(120deg, rgba(37, 99, 235, 0.15), rgba(14, 165, 233, 0.05));
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #60a5fa, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: 0 auto 35px;
+            font-size: 1.1rem;
+            color: #cbd5f5;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            background: linear-gradient(90deg, #2563eb, #0ea5e9);
+            color: white;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(37, 99, 235, 0.6);
+        }
+
+
+        section {
+            max-width: 1100px;
+            margin: auto;
+            padding: 80px 20px;
+        }
+
+        section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        section p {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+
+        .grid {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            padding: 30px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+
+        .cta {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(120deg, rgba(37, 99, 235, 0.25), rgba(14, 165, 233, 0.15));
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        section {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="hero">
+        <div>
+            <h1>Will It Rain Tomorrow?</h1>
+            <span style="
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:999px;
+    background:rgba(56,189,248,0.15);
+    color:#7dd3fc;
+    font-size:0.9rem;
+    margin-bottom:15px;
+">
+                Machine Learning • Random Forest
+            </span>
+
+            <p>
+                A machine learning system that analyzes real Australian weather data to predict rainfall — helping you
+                plan smarter, not harder.
+            </p>
+            <a href="{{ url_for('predict') }}" class="btn">🌧️ Check Prediction</a>
+        </div>
+    </div>
+
+
+    <section>
+        <h2>Rain Is More Than Just Weather</h2>
+        <p>
+            Rain impacts agriculture, transport, travel plans, and daily life.
+            Tiny changes in humidity and pressure often signal rainfall — patterns humans miss, but machines can learn.
+        </p>
+    </section>
+
+
+    <section>
+        <h2>The Data Behind the Prediction</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>📍 Australia-wide Data</h3>
+                <p>Collected from multiple locations across Australia.</p>
+            </div>
+            <div class="card">
+                <h3>📊 Weather Signals</h3>
+                <p>Temperature, wind, humidity, pressure, and rainfall.</p>
+            </div>
+            <div class="card">
+                <h3>📆 Historical Trends</h3>
+                <p>Years of observations help capture seasonal behavior.</p>
+            </div>
+            <div class="card">
+                <h3>🎯 Clear Objective</h3>
+                <p>Predict whether it will rain tomorrow — yes or no.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <h2>How the AI Thinks</h2>
+        <p>
+            A Random Forest model analyzes thousands of past weather patterns.
+            Each tree learns a different rule — together they vote on the final prediction and confidence.
+        </p>
+    </section>
+
+
+    <section>
+        <h2>Why This Matters</h2>
+        <p>
+            This project demonstrates how machine learning can convert raw data into actionable insights —
+            the same principles used in real-world forecasting systems.
+        </p>
+    </section>
+
+
+    <div class="cta">
+        <h2>Try the Prediction</h2>
+        <p>Enter today’s weather conditions and see tomorrow’s forecast.</p>
+        <br>
+        <a href="{{ url_for('predict') }}" class="btn">🌦️ Predict Rain Now</a>
+    </div>
+
+    <footer>
+        Built with Flask & Machine Learning • Amritanshu Mukund
+    </footer>
+
+</body>
+<footer>
+    © 2026 • Rain Prediction System  
+    <br>
+    Built with Flask, Scikit-learn & Real Weather Data
+</footer>
+
+</html>
