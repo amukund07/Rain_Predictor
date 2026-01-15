@@ -37,4 +37,4 @@ Min–Max scaling
 
 One-Hot Encoding for categorical variables
 
-Train / Validation / Test split based on yea
+Train / Validation / Test split based on year
